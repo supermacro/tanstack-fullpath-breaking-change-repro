@@ -5,7 +5,7 @@ import type { FileRoutesByFullPath } from '../routeTree.gen'
 // On commits after that change, generator emits '/posts/$postId/' instead.
 export type ReproBreakage = FileRoutesByFullPath['/posts/$postId']
 
-export const Route = createFileRoute('/posts/$postId/')({
+export const Route = createFileRoute('/posts/$postId/' as any)({
   component: PostDetail,
 })
 

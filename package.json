@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc --noEmit",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "proof:before-b42f84": "cp snapshots/routeTree.pre-b42f84.gen.ts src/routeTree.gen.ts && npm run typecheck",
+    "proof:after-b42f84": "cp snapshots/routeTree.post-b42f84.gen.ts src/routeTree.gen.ts && npm run typecheck"
   },
   "dependencies": {
     "@tanstack/react-router": "1.159.5",

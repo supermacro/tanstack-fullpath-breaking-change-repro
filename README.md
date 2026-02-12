@@ -49,3 +49,23 @@ src/routes/posts.$postId.index.tsx(...): error TS2339: Property '/posts/$postId'
 - `type ReproBreakage = FileRoutesByFullPath['/posts/$postId']`
 
 That type is valid with the pre-commit fullPath key set, and invalid once the trailing slash is introduced.
+
+## How the true snapshots were generated
+
+These are not hand-written snapshots. They were extracted from the TanStack Router git history:
+
+- `snapshots/true/routeTree.pre-b42f84.snapshot.ts`
+- `snapshots/true/routeTree.at-b42f84.snapshot.ts`
+
+Source file used in TanStack Router history:
+
+- `packages/router-generator/tests/generator/nested-verboseFileRoutes-false/routeTree.snapshot.ts`
+
+Commands used to generate them:
+
+```bash
+git -C /Users/gio/dev/tanstack-router show b42f84a4f6ffac19051f698d34fc9a64eca62a46^:packages/router-generator/tests/generator/nested-verboseFileRoutes-false/routeTree.snapshot.ts > snapshots/true/routeTree.pre-b42f84.snapshot.ts
+git -C /Users/gio/dev/tanstack-router show b42f84a4f6ffac19051f698d34fc9a64eca62a46:packages/router-generator/tests/generator/nested-verboseFileRoutes-false/routeTree.snapshot.ts > snapshots/true/routeTree.at-b42f84.snapshot.ts
+```
+
+The proof commands run `scripts/generate-proof-route-tree.mjs`, which reads each true snapshot and derives `src/routeTree.gen.ts` by preserving the observed fullPath key shape (`'/posts/$postId'` vs `'/posts/$postId/'`) before running `tsc`.
